@@ -1,8 +1,11 @@
 import React from 'react';
 import Header from '../components/header.js'
 import {AiOutlineSearch} from 'react-icons/ai'
+import useFetch from '../useFetch.js'
 
 const Home = () => {
+    const {data,isPending, error} = useFetch('https://restcountries.com/v2/all');
+
     return ( 
         <main className='h-screen flex flex-col items-center w-full overflow-x-hidden bg-verylightgrey overflow-scroll"'>
             <Header />
@@ -17,6 +20,23 @@ const Home = () => {
                         <option value="fake">Fake</option>
                     </select>
                 </section>
+                <div className="flex flex-col h-full w-full">
+                {error &&<div>{error}</div>}
+                {isPending && <div>Loading...</div>}
+                {data && data.map(data => (
+                    <section className='mt-10 flex flex-col items-center'>
+                        <div className='rounded-lg bg-white w-9/12 h-80 shadow-md'>
+                            <img className="rounded-t-lg w-full h-36"src={data.flags.png} alt="flag"/>
+                            <h1 className="mt-4 ml-4 font-bold">{data.name}</h1>
+                            <h2 className="mt-4 ml-4">Population: {data.population}</h2>
+                            <h2 className="mt-4 ml-4">Region: {data.region}</h2>
+                            <h2 className="mt-4 ml-4">Capital: {data.capital}</h2>
+                        </div>
+                    </section>
+                ))}
+
+
+                </div>
             </div>
 
 
