@@ -23,7 +23,7 @@ const Africa = () => {
 
         </div>
     </>
-    );
+     );
 }
-
+ 
 export default Africa;

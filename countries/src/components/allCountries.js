@@ -9,7 +9,7 @@ const Countries = () => {
         {error &&<div>{error}</div>}
         {isPending && <div>Loading...</div>}
         {data && data.map(data => (
-            <section key={data.name} className='mb-10 flex flex-col items-center'>
+            <section className='mb-10 flex flex-col items-center'>
                 <div className='rounded-lg bg-white w-9/12 h-80 shadow-md'>
                     <img className="rounded-t-lg w-full h-36"src={data.flags.png} alt="flag"/>
                     <h1 className="mt-4 ml-4 font-extrabold text-lg">{data.name}</h1>
@@ -23,7 +23,7 @@ const Countries = () => {
 
         </div>
     </>
-    );
+     );
 }
-
+ 
 export default Countries;
