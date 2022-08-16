@@ -33,7 +33,7 @@ const Home = () => {
     }
 
     return ( 
-        <main className='h-screen flex flex-col items-center w-full overflow-x-hidden bg-verylightgrey overflow-scroll"'>
+        <main className='h-screen flex flex-col items-center w-full overflow-x-hidden bg-verylightgrey dark:bg-verydarkblue overflow-scroll"'>
             <div className='flex flex-col items-center w-full'>
                 <Header />
                 <div className='relative flex text-gray-400 w-full'>
