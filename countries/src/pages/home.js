@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
     const [countries, setCountries] = useState([]);
     const [showh1,setShowh1] = useState(true);
-    const [country,setCountry] = useState([]);
     const navigate = useNavigate();
     
     
@@ -41,13 +40,7 @@ const Home = () => {
         setCountries(data)
         setShowh1(false)
     }
-    const countryPage = async country => {
-        if(country === '') return
-        const res = await fetch(`https://restcountries.com/v3.1/name/${country}`)
-        const data = await res.json()
-        setCountry(data)
-        navigate('/country')
-    }
+  
     
     return ( 
         <main className='h-screen flex flex-col items-center w-full overflow-x-hidden bg-verylightgrey dark:bg-verydarkblue overflow-scroll"'>
@@ -69,17 +62,17 @@ const Home = () => {
                 </div>
             </div>
             <div className="flex flex-col md:flex-row md:gap-20 md:justify-center md:flex-wrap w-full mt-10">
-        {countries.map((country,index) => (
+        {countries.map((country,index) => 
             <section key={index} className='mb-10 flex flex-col items-center'>
-                <div className='rounded-lg bg-white dark:bg-darkblue w-9/12 md:w-72 min-h-80 max-h-92 shadow-md' onClick={e => countryPage(country.name)}>
+                <div className='rounded-lg bg-white dark:bg-darkblue w-9/12 md:w-72 min-h-80 max-h-92 shadow-md'>
                     <img className="rounded-t-lg w-full h-36"src={country.flags.png} alt="flag"/>
-                    {showh1 ?<h1 className="mt-4 ml-4 dark:text-white font-extrabold text-lg">{country.name}</h1>:<h1 className=" dark:text-white mt-4 ml-4 font-extrabold text-lg">{country.name.common}</h1>}
+                    {showh1 ?<h1 onClick={() => navigate(`/country/${country.name}`)} className="hover:opacity-60 cursor-pointer mt-4 ml-4 dark:text-white font-extrabold text-lg">{country.name}<span className="text-xs"><br/>(More info)</span></h1>:<h1 onClick={() => navigate(`/country/${country.name.common}`)} className="hover:opacity-60 cursor-pointer dark:text-white mt-4 ml-4 font-extrabold text-lg">{country.name.common}<span className="text-xs"><br/>(More info)</span></h1>}
                     <h2 className="dark:text-white mt-4 ml-4 font-light text-sm"><span className="font-semibold">Population:</span> {country.population}</h2>
                     <h2 className="dark:text-white mt-4 ml-4 font-light text-sm"><span className="font-semibold">Region:</span> {country.region}</h2>
                     <h2 className="dark:text-white mt-4 ml-4 font-light text-sm mb-11"><span className="font-semibold">Capital:</span> {country.capital}</h2>
                 </div>
             </section>
-        ))}
+        )}
 
 
         </div>
