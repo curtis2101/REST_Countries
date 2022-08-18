@@ -23,7 +23,7 @@ const Country = () => {
         (data => {setDetails(data);
             setString(Object.keys(data[0].currencies || {}).toString());
             setLang(Object.keys(data[0].languages || {}).toString());
-            setNative(Object.keys(data[0].name.nativeName || {}).toString());
+            setNative(Object.keys(data[0].name.nativeName || {}));
         })
     }, [country])
         
@@ -40,7 +40,7 @@ const Country = () => {
                     <img className='rounded mb-11 w-10/12 h-6/6' alt={data.name.common} src={data.flags.png}/>
                     <section className='flex flex-col w-full '>
                         <h1 className='font-extrabold text-xl ml-7'>{data.name.common}</h1>
-                        <p className='ml-7 mt-4 text-sm font-light'><span className='text-sm font-semibold'>Native Name: </span>{data.name.nativeName[native].common}</p>
+                        <p className='ml-7 mt-4 text-sm font-light'><span className='text-sm font-semibold'>Native Name: </span>{data.name.nativeName[native[0]].common}</p>
                         <p className='ml-7 mt-2 text-sm font-light'><span className='text-sm font-semibold'>Population: </span>{data.population}</p>
                         <p className='ml-7 mt-2 text-sm font-light'><span className='text-sm font-semibold'>Region: </span>{data.region}</p>
                         <p className='ml-7 mt-2 text-sm font-light'><span className='text-sm font-semibold'>Sub Region: </span>{data.subregion}</p>
@@ -49,7 +49,7 @@ const Country = () => {
                         <p className='ml-7 mt-2 text-sm font-light'><span className='text-sm font-semibold'>Currencies: </span>{data.currencies[string].name}</p>
                         <p className='ml-7 mt-2 text-sm font-light'><span className='text-sm font-semibold'>Languages: </span>{data.languages[lang]}</p>
                         <h2 className='font-semibold text-base ml-7 mt-8'>Border Countries:</h2>
-                        <button className='border-2 shadow-md rounded cursor-pointer w-24 h-6 ml-7 mt-4 text-xs font-light'>{data.borders}</button>
+                        <button className='mb-14 border-2 shadow-md rounded cursor-pointer w-24 h-6 ml-7 mt-4 text-xs font-light'>{data.borders}</button>
 
                     </section>
                 </div>)}
