@@ -18,7 +18,7 @@ const Country = () => {
         navigate('/')
     }
     
-
+    console.log(lang)
     
     useEffect( () => {
     
@@ -54,16 +54,15 @@ const Country = () => {
                             <div className='md:flex md:flex-col md:ml-3 lg:ml-36'>
                                 <p className='ml-7 mt-8 md:mt-4 md:text-lg text-sm font-light'><span className='text-sm md:text-lg font-semibold'>Top Level Domain: </span>{data.tld}</p>
                                 <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Currencies: </span>{data.currencies[string].name}</p>
-                                <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Languages: </span>{data.languages[lang[0]]}</p>
+                                <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Languages: </span>{data.languages[lang]}</p>
                             </div>
                         </div>
+                        {details[0].borders ? 
                         <div className='md:flex md:flex-row md:mt-16 md:justify-center lg:justify-start md:w-full mr-1 '>
                             <h2 className='font-semibold text-base ml-7 md:ml-3 lg:ml-7 mt-8 md:mt-0 md:text-lg'>Border Countries:</h2>
                             {details[0].borders.map((data,index) => 
                             <button key={index} className='mb-14 border-2 md:mt-0 dark:bg-darkblue dark:border-darkblue shadow-md rounded cursor-pointer w-24 md:w-24 lg:w-28 md:h-7 h-6 ml-7 mt-4 text-xs md:text-base font-light'>{data}</button>
-                        )}</div>
-                        <h1>{details[0].borders.map((data) => `${data},`)}</h1>
-                        <h1>{details[0].languages.lang}</h1>
+                        )}</div> : null}
                     </section>
                 </div>)}
             </div>
