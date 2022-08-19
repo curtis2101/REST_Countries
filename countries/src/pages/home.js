@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
     const [countries, setCountries] = useState([]);
     const [showh1,setShowh1] = useState(true);
+    const[isPending,setIsPending] = useState(true);
+    const[error,setError] = useState(null);
     const navigate = useNavigate();
     
     
@@ -33,14 +35,27 @@ const Home = () => {
             
         
     }
-    const searchCountry = async input => {
+    const searchCountry = input => {
         if(input.length < 3 && input === '') return
-        const res = await fetch(`https://restcountries.com/v3.1/name/${input}`)
-        const data = await res.json()
+        fetch(`https://restcountries.com/v3.1/name/${input}`)
+        .then(res => {
+            if(!res.ok){
+                throw Error('Invalid country name. Please try again');
+            }
+            return res.json();
+        })
+        .then(data =>{
         setCountries(data)
+        setIsPending(false);
+        setError(null);
         setShowh1(false)
+        })
+        .catch(err => {
+            setIsPending(false);
+            setError(err.message);
+        })
+        return {countries, isPending,error}
     }
-  
     
     return ( 
         <main className='h-screen flex flex-col items-center w-full overflow-x-hidden bg-verylightgrey dark:bg-verydarkblue overflow-scroll"'>
@@ -61,6 +76,7 @@ const Home = () => {
                     </section>
                 </div>
             </div>
+            {error &&<div className='flex flex-col mt-4 text-lg text-red-600'>{error}</div>}
             <div className="flex flex-col md:flex-row md:gap-20 md:justify-center md:flex-wrap w-full mt-10">
         {countries.map((country,index) => 
             <section key={index} className='mb-10 flex flex-col items-center'>
