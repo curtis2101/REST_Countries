@@ -57,10 +57,13 @@ const Country = () => {
                                 <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Languages: </span>{data.languages[lang[0]]}</p>
                             </div>
                         </div>
-                        <div className='md:flex md:flex-row md:mt-16 md:justify-items-start md:w-8/12'>
+                        <div className='md:flex md:flex-row md:mt-16 md:justify-center lg:justify-start md:w-full mr-1 '>
                             <h2 className='font-semibold text-base ml-7 md:ml-3 lg:ml-7 mt-8 md:mt-0 md:text-lg'>Border Countries:</h2>
-                            <button className='mb-14 border-2 md:mt-0 dark:bg-darkblue dark:border-darkblue shadow-md rounded cursor-pointer w-24 md:w-28 md:h-7 h-6 ml-7 mt-4 text-xs md:text-base font-light'>{data.borders}</button>
-                        </div>
+                            {details[0].borders.map((data,index) => 
+                            <button key={index} className='mb-14 border-2 md:mt-0 dark:bg-darkblue dark:border-darkblue shadow-md rounded cursor-pointer w-24 md:w-24 lg:w-28 md:h-7 h-6 ml-7 mt-4 text-xs md:text-base font-light'>{data}</button>
+                        )}</div>
+                        <h1>{details[0].borders.map((data) => `${data},`)}</h1>
+                        <h1>{details[0].languages.lang}</h1>
                     </section>
                 </div>)}
             </div>
