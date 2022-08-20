@@ -15,6 +15,7 @@ const Country = () => {
     const[isPending,setIsPending] = useState(true);
     const[error,setError] = useState(null);
     const [code,setCode] = useState(null);
+    const [borders,setBorders] = useState(null);
 
     const goBack = () => {
         navigate('/')
@@ -29,33 +30,35 @@ const Country = () => {
             setString(Object.keys(data[0].currencies || {}).toString());
             setLang(Object.values(data[0].languages || {}));
             setNative(Object.keys(data[0].name.nativeName || {}));
+            setBorders(Object.values(data[0].borders || {}).toString());
             setIsPending(false)
         })
     }, [country])
 
-    // const borders = c => {
-    //     setCode(c)
-    //     setIsPending(true)
-    //     fetch(`https://restcountries.com/v3.1/alpha/${code}`)
-    //     .then(res => {
-    //         if(!res.ok){
-    //             throw Error('couldnt fetch data');
-    //         }
-    //         return res.json();
-    //     })
-    //     .then
-    //     (data => {
-    //         setDetails(data.name.common);
-    //         setIsPending(false)
-    //         setError(null);
-    //     })
-    //     .catch(err => {
-    //         setIsPending(false);
-    //         setError(err.message);
-    //     })
-    
-    // }
-    
+    console.log(borders)
+        useEffect( () => {
+        setIsPending(true)
+        fetch(`https://restcountries.com/v3.1/alpha?codes=${borders}`)
+        .then(res => {
+            if(!res.ok){
+                throw Error('couldnt fetch data');
+            }
+            return res.json();
+        })
+        .then
+        (data => {
+            setCode(data);
+            if(!code === null)
+            console.log('hi')
+            setIsPending(false)
+            setError(null);
+        })
+        .catch(err => {
+            setIsPending(false);
+            setError(err.message);
+        })
+    },[borders])
+
     return (
         <main className='h-screen flex flex-col items-center w-full overflow-x-hidden bg-verylightgrey dark:bg-verydarkblue overflow-scroll'>
             <div className='flex flex-col items-center w-full'>
@@ -63,7 +66,7 @@ const Country = () => {
                 <section className='flex justify-items-start w-full'>
                     <button onClick={goBack} className='md:w-32 md:h-10 dark:bg-darkblue dark:text-white dark:border-darkblue border-2 ml-7 mt-10 mb-16 md:border rounded-lg shadow-md hover:shadow-inner cursor-pointer w-3/12 flex flex-row items-center justify-center text-sm font-light'><span className='mr-2 text-lg'><BsArrowLeft/></span>Back</button>
                 </section>
-                {error && <div>error</div>}
+                {/* {error && <div>error</div>} */}
                 {isPending && <button disabled type="button" className="mt-10 py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-darkblue dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center">
     <svg role="status" className="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -93,9 +96,9 @@ const Country = () => {
                         {details[0].borders ? 
                         <div className='md:flex md:flex-row md:mt-16 md:justify-center lg:justify-start md:w-full md:flex-wrap md:gap-1 '>
                             <h2 className='font-semibold text-base ml-7 md:ml-3 lg:ml-7 mt-8 md:mt-0 md:text-lg'>Border Countries:</h2>
-                            {details[0].borders.map((data,index) => 
-                            <button key={index} className='mb-14 border-2 md:mt-0 dark:bg-darkblue dark:border-darkblue shadow-md rounded cursor-pointer w-24 md:w-24 lg:w-28 md:h-7 h-6 ml-7 mr-2 mt-4 text-xs md:text-base font-light'>{data}</button>
-                        )}</div> : null}
+                            {code ? code.map((data,index) => 
+                            <button key={index} className='mb-14 border-2 md:mt-0 dark:bg-darkblue dark:border-darkblue shadow-md rounded cursor-pointer w-24 md:w-24 lg:w-28 md:h-7 h-6 ml-7 mr-2 mt-4 text-xs md:text-base font-light'>{data.name.common}</button>
+                        ):null}</div> : null} 
                     </section>
                 </div>)}
             </div>
