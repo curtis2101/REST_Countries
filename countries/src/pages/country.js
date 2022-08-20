@@ -35,7 +35,6 @@ const Country = () => {
         })
     }, [country])
 
-    console.log(borders)
         useEffect( () => {
         setIsPending(true)
         fetch(`https://restcountries.com/v3.1/alpha?codes=${borders}`)
@@ -59,6 +58,11 @@ const Country = () => {
         })
     },[borders])
 
+    const borderCountry = country => {
+        setCountry(country)
+    }
+    console.log(string)
+
     return (
         <main className='h-screen flex flex-col items-center w-full overflow-x-hidden bg-verylightgrey dark:bg-verydarkblue overflow-scroll'>
             <div className='flex flex-col items-center w-full'>
@@ -81,7 +85,7 @@ const Country = () => {
                         <h1 className='font-extrabold text-xl md:text-2xl ml-7 md:mb-8 lg:mb-0'>{data.name.common}</h1>
                         <div className='md:flex md:flex-row'>
                             <div className='md:flex md:flex-col md:mr-24 lg:mr-0'>
-                                <p className='ml-7 mt-4 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Native Name: </span>{data.name.nativeName[native[0]].common}</p>
+                                {/* <p className='ml-7 mt-4 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Native Name: </span>{data.name.nativeName[native[0]].common}</p> */}
                                 <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Population: </span>{data.population}</p>
                                 <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Region: </span>{data.region}</p>
                                 <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Sub Region: </span>{data.subregion}</p>
@@ -89,7 +93,7 @@ const Country = () => {
                             </div>
                             <div className='md:flex md:flex-col md:ml-3 lg:ml-36'>
                                 <p className='ml-7 mt-8 md:mt-4 md:text-lg text-sm font-light'><span className='text-sm md:text-lg font-semibold'>Top Level Domain: </span>{data.tld}</p>
-                                <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Currencies: </span>{data.currencies[string].name}</p>
+                                {/* <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Currencies: </span>{data.currencies[string].name}</p> */}
                                 <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Languages: </span>{lang.map((data) => <span className='mr-2'>{data}</span>)}</p>
                             </div>
                         </div>
@@ -97,7 +101,7 @@ const Country = () => {
                         <div className='md:flex md:flex-row md:mt-16 md:justify-center lg:justify-start md:w-full md:flex-wrap md:gap-1 '>
                             <h2 className='font-semibold text-base ml-7 md:ml-3 lg:ml-7 mt-8 md:mt-0 md:text-lg'>Border Countries:</h2>
                             {code ? code.map((data,index) => 
-                            <button key={index} className='mb-14 border-2 md:mt-0 dark:bg-darkblue dark:border-darkblue shadow-md rounded cursor-pointer w-24 md:w-24 lg:w-28 md:h-7 h-6 ml-7 mr-2 mt-4 text-xs md:text-base font-light'>{data.name.common}</button>
+                            <button key={index} onClick={e => borderCountry(e.target.innerHTML)} className='mb-14 border-2 md:mt-0 dark:bg-darkblue dark:border-darkblue shadow-md rounded cursor-pointer w-max pr-2 pl-2 md:h-7 h-6 ml-7 mr-2 mt-4 text-xs md:text-base font-light'>{data.name.common}</button>
                         ):null}</div> : null} 
                     </section>
                 </div>)}
