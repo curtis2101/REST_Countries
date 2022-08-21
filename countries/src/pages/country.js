@@ -34,7 +34,6 @@ const Country = () => {
     }, [country])
 
         useEffect( () => {
-        setIsPending(true)
         fetch(`https://restcountries.com/v3.1/alpha?codes=${borders}`)
         .then(res => {
             if(!res.ok){
