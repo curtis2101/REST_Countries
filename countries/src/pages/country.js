@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import Header from '../components/header.js'
-import{BsArrowLeft} from 'react-icons/bs'
+import{BsArrowLeft, BsConeStriped} from 'react-icons/bs'
 import { useNavigate } from "react-router-dom";
 
 const Country = () => {
@@ -9,13 +9,12 @@ const Country = () => {
     const {countryName} = useParams();
     const [country,setCountry] = useState(countryName);
     const [details,setDetails] = useState(null);
-    const [string,setString] = useState(null);
     const [lang , setLang] = useState(null);
-    const [native, setNative] = useState(null);
     const[isPending,setIsPending] = useState(true);
     const[error,setError] = useState(null);
     const [code,setCode] = useState(null);
     const [borders,setBorders] = useState(null);
+    const [currency,setCurrency] = useState(null);
 
     const goBack = () => {
         navigate('/')
@@ -27,9 +26,8 @@ const Country = () => {
         fetch(`https://restcountries.com/v3.1/name/${country}`).then
         (res => {return res.json();}).then
         (data => {setDetails(data);
-            setString(Object.keys(data[0].currencies || {}).toString());
+            setCurrency(data.map(data => Object.values(data.currencies)).map(data => Object.values(data)).map(data => data.map(data => data.name)).map(data => data.toString()))   
             setLang(Object.values(data[0].languages || {}));
-            setNative(Object.keys(data[0].name.nativeName || {}));
             setBorders(Object.values(data[0].borders || {}).toString());
             setIsPending(false)
         })
@@ -48,7 +46,6 @@ const Country = () => {
         (data => {
             setCode(data);
             if(!code === null)
-            console.log('hi')
             setIsPending(false)
             setError(null);
         })
@@ -61,7 +58,7 @@ const Country = () => {
     const borderCountry = country => {
         setCountry(country)
     }
-    console.log(string)
+    console.log(error)
 
     return (
         <main className='h-screen flex flex-col items-center w-full overflow-x-hidden bg-verylightgrey dark:bg-verydarkblue overflow-scroll'>
@@ -85,7 +82,6 @@ const Country = () => {
                         <h1 className='font-extrabold text-xl md:text-2xl ml-7 md:mb-8 lg:mb-0'>{data.name.common}</h1>
                         <div className='md:flex md:flex-row'>
                             <div className='md:flex md:flex-col md:mr-24 lg:mr-0'>
-                                {/* <p className='ml-7 mt-4 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Native Name: </span>{data.name.nativeName[native[0]].common}</p> */}
                                 <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Population: </span>{data.population}</p>
                                 <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Region: </span>{data.region}</p>
                                 <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Sub Region: </span>{data.subregion}</p>
@@ -93,7 +89,7 @@ const Country = () => {
                             </div>
                             <div className='md:flex md:flex-col md:ml-3 lg:ml-36'>
                                 <p className='ml-7 mt-8 md:mt-4 md:text-lg text-sm font-light'><span className='text-sm md:text-lg font-semibold'>Top Level Domain: </span>{data.tld}</p>
-                                {/* <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Currencies: </span>{data.currencies[string].name}</p> */}
+                                <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Currencies: </span><span className=''>{currency[0]}</span></p>
                                 <p className='ml-7 mt-2 text-sm md:text-lg font-light'><span className='text-sm md:text-lg font-semibold'>Languages: </span>{lang.map((data) => <span className='mr-2'>{data}</span>)}</p>
                             </div>
                         </div>
@@ -101,7 +97,7 @@ const Country = () => {
                         <div className='md:flex md:flex-row md:mt-16 md:justify-center lg:justify-start md:w-full md:flex-wrap md:gap-1 '>
                             <h2 className='font-semibold text-base ml-7 md:ml-3 lg:ml-7 mt-8 md:mt-0 md:text-lg'>Border Countries:</h2>
                             {code ? code.map((data,index) => 
-                            <button key={index} onClick={e => borderCountry(e.target.innerHTML)} className='mb-14 border-2 md:mt-0 dark:bg-darkblue dark:border-darkblue shadow-md rounded cursor-pointer w-24 min-w-fit  pr-2 pl-2 md:h-7 h-6 ml-7 mr-2 mt-4 text-xs md:text-base font-light'>{data.name.common}</button>
+                            <button key={index} onClick={e => borderCountry(e.target.innerHTML)} className='mb-14 border-2 md:mt-0 dark:bg-darkblue dark:border-darkblue shadow-md rounded cursor-pointer w-24 md:w-28 min-w-fit  pr-2 pl-2 md:h-7 h-6 ml-7 mr-2 mt-4 text-xs md:text-base font-light'>{data.name.common}</button>
                         ):null}</div> : null} 
                     </section>
                 </div>)}
