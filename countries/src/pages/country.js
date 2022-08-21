@@ -101,7 +101,7 @@ const Country = () => {
                         <div className='md:flex md:flex-row md:mt-16 md:justify-center lg:justify-start md:w-full md:flex-wrap md:gap-1 '>
                             <h2 className='font-semibold text-base ml-7 md:ml-3 lg:ml-7 mt-8 md:mt-0 md:text-lg'>Border Countries:</h2>
                             {code ? code.map((data,index) => 
-                            <button key={index} onClick={e => borderCountry(e.target.innerHTML)} className='mb-14 border-2 md:mt-0 dark:bg-darkblue dark:border-darkblue shadow-md rounded cursor-pointer w-max pr-2 pl-2 md:h-7 h-6 ml-7 mr-2 mt-4 text-xs md:text-base font-light'>{data.name.common}</button>
+                            <button key={index} onClick={e => borderCountry(e.target.innerHTML)} className='mb-14 border-2 md:mt-0 dark:bg-darkblue dark:border-darkblue shadow-md rounded cursor-pointer w-24 min-w-fit  pr-2 pl-2 md:h-7 h-6 ml-7 mr-2 mt-4 text-xs md:text-base font-light'>{data.name.common}</button>
                         ):null}</div> : null} 
                     </section>
                 </div>)}
