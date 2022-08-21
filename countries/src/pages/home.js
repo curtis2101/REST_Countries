@@ -102,8 +102,8 @@ const Home = () => {
             <div className="flex flex-col md:flex-row md:gap-20 md:justify-center md:flex-wrap w-full mt-10">
         {countries && countries.map((country,index) => 
             <section key={index} className='mb-10 flex flex-col items-center'>
-                <div className='rounded-lg bg-white dark:bg-darkblue w-9/12 md:w-72 min-h-80 max-h-92 shadow-md'>
-                    <img className="rounded-t-lg w-full h-36"src={country.flags.png} alt="flag"/>
+                <div className='rounded-lg bg-white dark:bg-darkblue w-64 md:w-72 min-h-80 max-h-92 shadow-md'>
+                    <img className="rounded-t-lg w-full h-40"src={country.flags.png} alt="flag"/>
                     {showh1 ?<h1 onClick={() => navigate(`/country/${country.name}`)} className="hover:opacity-60 cursor-pointer mt-4 ml-4 dark:text-white font-extrabold text-lg">{country.name}<span className="text-xs"><br/>(More info)</span></h1>:<h1 onClick={() => navigate(`/country/${country.name.common}`)} className="hover:opacity-60 cursor-pointer dark:text-white mt-4 ml-4 font-extrabold text-lg">{country.name.official}<span className="text-xs"><br/>(More info)</span></h1>}
                     <h2 className="dark:text-white mt-4 ml-4 font-light text-sm"><span className="font-semibold">Population:</span> {country.population}</h2>
                     <h2 className="dark:text-white mt-4 ml-4 font-light text-sm"><span className="font-semibold">Region:</span> {country.region}</h2>
