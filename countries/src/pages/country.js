@@ -56,6 +56,7 @@ const Country = () => {
 
     const borderCountry = country => {
         setCountry(country)
+        navigate(`/country/${country}`)
     }
     console.log(error)
 
